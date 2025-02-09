@@ -7,14 +7,18 @@ const StoreContextProvider = (props) => {
     const [cartItems, setCartItems] = useState({});
 
     const addToCart = (itemId) => {
+        if (!itemId) {
+            console.error("❌ Error: itemId is undefined in addToCart!");
+            return;
+        }
+    
         setCartItems((prev) => {
             const newCount = prev[itemId] ? prev[itemId] + 1 : 1;
-            console.log("Updating cart for itemId: ", itemId, "New Count: ", newCount);
+            console.log("✅ Updating cart for itemId:", itemId, "New Count:", newCount);
             return { ...prev, [itemId]: newCount };
         });
-    }
+    };
     
-      
 
     const removeFromCart = (itemId) => {
         setCartItems((prev) => {
@@ -32,8 +36,9 @@ const StoreContextProvider = (props) => {
     
 
     useEffect(() => {
-        console.log("Updated Cart Items:", cartItems);
+        console.log("📦 Cart updated:", cartItems);
     }, [cartItems]);
+    
 
     const contextValue = {
         food_list,
